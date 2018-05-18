@@ -143,14 +143,19 @@ public:
 
     sofa::component::container::MechanicalObject<sofa::defaulttype::Rigid3dTypes> *DOFs;
     sofa::component::visualmodel::BaseCamera::SPtr camera;
-
+    float positionInstrument;
+    
     float getTraslValue(){return n1;}
     float getPositionInstrument(){return positionInstrument;}
+    void setPositionInstrument(float positionInstrument){this->positionInstrument=positionInstrument;}
 
     bool initVisu;
 
     SerialData data_s;
     AllSerialData allData;
+
+    // creado para guardar la poscion del hapkit
+
 
 
 	SerialDriver();
@@ -166,7 +171,6 @@ public:
     void cleanup();
     virtual void draw(const core::visual::VisualParams*) override;
     virtual void draw();
-    float askDevice();
 
     void setForceFeedback(ForceFeedback* ff);
 
@@ -214,8 +218,7 @@ private:
     float n1;
     // double n1;
 
-    // creado para guardar la poscion del hapkit
-    float positionInstrument;
+
 
     //Serial Functions
     int  serial_open(char *serial_name, speed_t baud);

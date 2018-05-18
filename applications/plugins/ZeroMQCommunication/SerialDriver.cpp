@@ -117,7 +117,7 @@ void SerialDriver::setForceFeedback(ForceFeedback *ff)
 void SerialDriver::init()
 {
     std::cout << "Enter to init method - SerialDriver.cpp" << std::endl;
-    
+
     n1 = 0.0f;
 
     sofa::simulation::Node::SPtr rootContext = static_cast<simulation::Node *>(this->getContext()->getRootContext());
@@ -182,8 +182,8 @@ void SerialDriver::init()
     std::cout << "Mi nombre es " << listMechanicalObj.size() << std::endl;
     int numberM = listMechanicalObj.size();*/
 
-    /** 
-     * We get a 
+    /**
+     * We get a
     */
     getContext()->get<MechanicalObjectType>(&objectsMechTemp, core::objectmodel::BaseContext::SearchDown);
 
@@ -272,7 +272,7 @@ void SerialDriver::init()
     {
         printf("Error opening the serial device: %s\n", "/dev/usbnoseque");
         perror("OPEN");
-        exit(0);
+        //exit(0);
     }
 }
 
@@ -333,81 +333,20 @@ void SerialDriver::draw()
     std::cout << "Enter to draw method - SerialDriver.cpp " << std::endl;
     if (initVisu)
     {
-        //VecCoord& posD =(*posDevice.beginEdit());
-        if (serial_fd != -1)
-        {
-            float n;
-            int flush = tcflush(serial_fd, TCIOFLUSH);
-            n = serial_read(serial_fd, data, CMD_LEN, TIMEOUT);
-            
-            // este parametro data es de la escena, son como las coordenadas o posicion del instrumento
-            // cambia cuando muevo la escena con el mouse en sofa
+        cout << "Received Request positionInstrument" << positionInstrument << endl;
+        VecCoord &posDOF = *(objectsMechTemp[0]->x.beginEdit());
+          posDOF.resize(NVISUALNODE + 1);
+          // en el draw se convierte ese data positon instrumen a  float
+          // positionInstrument = atof(data) * 0.5f;
+          //positionInstrument = sscanf(data, "%f", n1);
+          posDOF[1].getCenter()[2] = posDOFEST + positionInstrument;
+          //std::cout << "PosRigid: " <<posDOF[1].getCenter()[2] << std::endl;
+        objectsMechTemp[0]->x.endEdit();
 
-            std::cout << "Data brought from serial_read method " << data << std::endl;
-            flush = tcflush(serial_fd, TCIOFLUSH);
-            //n = n*0.01f;
-            
-            //cout << "Applying sscanf " << std::endl;
-            //sscanf(data, "%f", &n1);
-            //printf("%.3f" "%s", n1, "  ");
-
-            n1 = atof(data) * 0.5f;
-            // se multiplica por 0.5 para escalar el dato que se lee y mejorar la precision
-            // con respecto a lo que se lee y se mueve en el hapkit y la escena
-            printf("%.3f", n1);
-            cout << "n1 value which have data turn it " << n1 << std::endl;
-
-            VecCoord &posDOF = *(objectsMechTemp[0]->x.beginEdit());
-            posDOF.resize(NVISUALNODE + 1);
-
-            // en el draw se convierte ese data positon instrumen a  float 
-            positionInstrument = atof(data) * 0.5f;
-            //positionInstrument = sscanf(data, "%f", n1);
-            posDOF[1].getCenter()[2] = posDOFEST + n1;
-            //std::cout << "PosRigid: " <<posDOF[1].getCenter()[2] << std::endl;
-            objectsMechTemp[0]->x.endEdit();
-        }
-        //std::cout << posDOF[1].getCenter()[2] << std::endl;
-        //for(int i=0;i<NVISUALNODE;i++)
-        //{+ 0.01f
-        //  if(omniVisu.getValue() || i>6)
-        //  {
-        //      visualNode[i].visu->drawVisual();
-        //      visualNode[i].mapping->draw();
-        //  }
-        //}
-        //rigidDOF->x.endEdit();
     }
 
-    std::cout << "Serial Driver draw n1: " << n1 << " " << positionInstrument << std::endl;
-    printf("%.3f", positionInstrument);
-    //std::cout<<"SerialDriver::draw() is called" <<std::endl;
 }
 
-float SerialDriver::askDevice()
-{
-    /*std::cout << "Entrando al metodo askDevice " << std::endl;
-    // float n1 = -1;
-    if (serial_fd != -1)
-    {
-        // float n1;
-        float n;
-        int flush = tcflush(serial_fd, TCIOFLUSH);
-        n = serial_read(serial_fd, data, CMD_LEN, TIMEOUT);
-
-        // este parametro data es de la escena
-
-        std::cout << data << "aaj" << std::endl;
-        flush = tcflush(serial_fd, TCIOFLUSH);
-        //n = n*0.01f;
-
-        n1 = atof(data) * 0.5;
-        cout << "este es n1 en donde estan los datos leidos del hapkit" << n1 << std::endl;
-        return n1;
-    }
-    return n1;*/
-    return 0.0f;
-}
 
 void SerialDriver::onKeyReleasedEvent(core::objectmodel::KeyreleasedEvent *kre)
 {
@@ -565,7 +504,7 @@ int SerialDriver::serial_read(int serial_fd, char *data, int size, int timeout_u
     std::cout << "Leaving serial_read method " << std::endl;
     std::cout << "count value " << count << std::endl;
     return count;
-    
+
 }
 
 void serial_close(int fd);

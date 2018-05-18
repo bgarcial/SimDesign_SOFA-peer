@@ -59,16 +59,17 @@ class ZMQClientComponent : public sofa::core::behavior::BaseController
     // Data<std::string> d_address;
     // typedef sofa::defaulttype::Vec3d Vec3d;
     // typedef defaulttype::Quat Quat;0
-    
+
 
     ZMQClientComponent();
     virtual ~ZMQClientComponent(){};
-    
+
     /* Conect to ZMQ external Server  */
     void setupConnection();
     // void setupConnectionAttachingData();
 
     /* Send some data to ZMQ external Server  */
+    float receiveData();
     void instrumentDataSend(instrumentData a);
     void hapkitDataSend();
     void attachingDataToSend(attachingData b);

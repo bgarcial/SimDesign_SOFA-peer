@@ -69,11 +69,22 @@ void ZMQClientComponent::setupConnection()
     /**
      * Connecting to publisherEndpoint and pushEndpoint
     */
-    sender.connect("tcp://localhost:5558");
+    //sender.connect("tcp://localhost:5558");
 
     // Set the identity http://api.zeromq.org/4-2:zmq-setsockopt
     //client.setsockopt(ZMQ_IDENTITY, "PEER1", 5);
 
+}
+
+float ZMQClientComponent::receiveData()
+{
+
+    char incomingData[500];
+    strcpy(incomingData, s_recv(subscriber).c_str());
+    // memcpy(incomingData,s_recv(subscriber), 500);
+    cout << "Received Request" << incomingData << endl;
+
+    return atof(incomingData);
 }
 
 void ZMQClientComponent::hapkitDataSend()
@@ -251,8 +262,8 @@ void ZMQClientComponent::draw(const core::visual::VisualParams *vparam)
 
 
     // ZMQClientComponent z;
-    hapkitDataSend();
-
+    // hapkitDataSend();
+    objectsSerialDriver[0]->setPositionInstrument(receiveData());
     //float a = s->askDevice();
     //float a = s->getTraslValue();
 
