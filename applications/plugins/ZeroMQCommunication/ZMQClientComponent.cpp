@@ -82,7 +82,7 @@ float ZMQClientComponent::receiveData()
     char incomingData[500];
     strcpy(incomingData, s_recv(subscriber).c_str());
     // memcpy(incomingData,s_recv(subscriber), 500);
-    cout << "Received Request" << incomingData << endl;
+    //cout << "Received Request" << incomingData << endl;
 
     return atof(incomingData);
 }
