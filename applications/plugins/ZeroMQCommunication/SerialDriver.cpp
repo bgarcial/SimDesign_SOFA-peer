@@ -56,7 +56,8 @@ const char *SerialDriver::visualNodeNames[NVISUALNODE] =
 const char *SerialDriver::visualNodeFiles[NVISUALNODE] =
     {
         // Caution, update this path ...
-        "/home/bgarcial/workspace/sofa/src/applications/plugins/Sensable/examples/data/mesh/dental_instrument.obj"};
+        "/home/labrv/Documents/peerSofaHapkit/sofa/src/applications/plugins/Sensable/examples/data/mesh/dental_instrument.obj"
+    };
 
 using namespace sofa::defaulttype;
 
@@ -116,7 +117,7 @@ void SerialDriver::setForceFeedback(ForceFeedback *ff)
 
 void SerialDriver::init()
 {
-    std::cout << "Enter to init method - SerialDriver.cpp" << std::endl;
+    // std::cout << "Enter to init method - SerialDriver.cpp" << std::endl;
 
     n1 = 0.0f;
 
@@ -306,7 +307,7 @@ void SerialDriver::setDataValue()
 
 void SerialDriver::reset()
 {
-    std::cout << "SerialDriver::reset() is called" << std::endl;
+    // std::cout << "SerialDriver::reset() is called" << std::endl;
     this->reinit();
 }
 
@@ -323,14 +324,14 @@ void SerialDriver::reinit()
 
 void SerialDriver::draw(const core::visual::VisualParams *vparam)
 {
-    std::cout << "Entrando al metodo draw del SerialDriver.cpp con parametros" << std::endl;
+    // std::cout << "Entrando al metodo draw del SerialDriver.cpp con parametros" << std::endl;
     vparam = NULL;
     draw();
 }
 
 void SerialDriver::draw()
 {
-    std::cout << "Enter to draw method - SerialDriver.cpp " << std::endl;
+    // std::cout << "Enter to draw method - SerialDriver.cpp " << std::endl;
     if (initVisu)
     {
         cout << "Received Request positionInstrument" << positionInstrument << endl;
@@ -431,7 +432,7 @@ int SerialDriver::serial_open(char *serial_name, speed_t baud)
 
 void SerialDriver::serial_send(int serial_fd, char *data, int size)
 {
-    std::cout << "Enter to serial_send " << std::endl;
+    // std::cout << "Enter to serial_send " << std::endl;
     serial_fd = 0;
     data = NULL;
     size = 0;
@@ -439,7 +440,7 @@ void SerialDriver::serial_send(int serial_fd, char *data, int size)
 
 int SerialDriver::serial_read(int serial_fd, char *data, int size, int timeout_usec)
 {
-    std::cout << "Enter to serial_read method " << std::endl;
+    // std::cout << "Enter to serial_read method " << std::endl;
     fd_set fds;
     struct timeval timeout;
     bool band = false;
@@ -471,7 +472,7 @@ int SerialDriver::serial_read(int serial_fd, char *data, int size, int timeout_u
             //-- Read the data (n bytes)
             n = read(serial_fd, &data[count], 1);
             // read viene de sofa/src/applications/plugins/SofaPML/argumentParser.h
-            std::cout << "Enter to read method to read hapkit data via serial port " << std::endl;
+            // std::cout << "Enter to read method to read hapkit data via serial port " << std::endl;
 
             if (band)
             {
@@ -494,15 +495,15 @@ int SerialDriver::serial_read(int serial_fd, char *data, int size, int timeout_u
             //-- The last byte is always a 0 (for printing the string data)
             data[count] = 0;
         }
-        std::cout << "band value: " << band << " and data: " << data << std::endl;
+        //  std::cout << "band value: " << band << " and data: " << data << std::endl;
 
         //-- Repeat the loop until a data block of size bytes is received or
         //-- a timeout occurs
     } while (count < size && ret == 1);
 
     //-- Return the number of bytes reads. 0 If a timeout has occurred.
-    std::cout << "Leaving serial_read method " << std::endl;
-    std::cout << "count value " << count << std::endl;
+    // std::cout << "Leaving serial_read method " << std::endl;
+    // std::cout << "count value " << count << std::endl;
     return count;
 
 }
