@@ -56,7 +56,7 @@ const char *SerialDriver::visualNodeNames[NVISUALNODE] =
 const char *SerialDriver::visualNodeFiles[NVISUALNODE] =
     {
         // Caution, update this path ...
-        "/home/labrv/Documents/peerSofaHapkit/sofa/src/applications/plugins/Sensable/examples/data/mesh/dental_instrument.obj"
+        "/home/bgarcial/Documents/sofa/src/applications/plugins/Sensable/examples/data/mesh/dental_instrument.obj"
     };
 
 using namespace sofa::defaulttype;
@@ -334,7 +334,7 @@ void SerialDriver::draw()
     // std::cout << "Enter to draw method - SerialDriver.cpp " << std::endl;
     if (initVisu)
     {
-        cout << "Received Request positionInstrument" << positionInstrument << endl;
+        // cout << "Received Request positionInstrument" << positionInstrument << endl;
         VecCoord &posDOF = *(objectsMechTemp[0]->x.beginEdit());
           posDOF.resize(NVISUALNODE + 1);
           // en el draw se convierte ese data positon instrumen a  float

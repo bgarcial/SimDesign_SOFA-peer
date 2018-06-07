@@ -63,7 +63,8 @@ void ZMQClientComponent::setupConnection()
      * Connecting to publisherEndpoint and pushEndpoint
     */
     cout << "Connecting to ZMQ Network Manager   " << publisherEndpoint << "..." << endl;
-    subscriber.connect("tcp://ec2-34-239-214-140.compute-1.amazonaws.com:5557");
+    // subscriber.connect("tcp://ec2-34-239-214-140.compute-1.amazonaws.com:5557");
+    subscriber.connect("tcp://localhost:5557");
     subscriber.setsockopt(ZMQ_SUBSCRIBE, "", 0);
 
     /**
@@ -83,7 +84,7 @@ float ZMQClientComponent::receiveData()
     strcpy(incomingData, s_recv(subscriber).c_str());
     // memcpy(incomingData,s_recv(subscriber), 500);
     //cout << "Received Request" << incomingData << endl;
-
+    cout << "Datos que llegan desde sender " << incomingData << endl;
     return atof(incomingData);
 }
 
@@ -257,10 +258,6 @@ void ZMQClientComponent::init()
 
 void ZMQClientComponent::draw(const core::visual::VisualParams *vparam)
 {
-    std::cout
-        << "Draw del ZMQ parameters" << std::endl;
-
-
     // ZMQClientComponent z;
     // hapkitDataSend();
     objectsSerialDriver[0]->setPositionInstrument(receiveData());
