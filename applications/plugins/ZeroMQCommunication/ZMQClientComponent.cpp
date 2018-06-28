@@ -63,7 +63,8 @@ void ZMQClientComponent::setupConnection()
      * Connecting to publisherEndpoint and pushEndpoint
     */
     cout << "Connecting to ZMQ Network Manager   " << publisherEndpoint << "..." << endl;
-    subscriber.connect("tcp://ec2-34-239-214-140.compute-1.amazonaws.com:5557");
+    // subscriber.connect("tcp://ec2-34-239-214-140.compute-1.amazonaws.com:5557");
+    subscriber.connect("tcp://localhost:5557");
     subscriber.setsockopt(ZMQ_SUBSCRIBE, "", 0);
 
     /**
