@@ -1,7 +1,7 @@
 #include <sofa/core/behavior/BaseController.h>
 #include <zmq.hpp>
 #include <sys/time.h>
-#include "PointNet.h"
+//#include "SurgicalProtocol.h"
 
 // #include <sofa/core/objectmodel/Data.h>
 // using sofa::core::objectmodel::Data;
@@ -16,6 +16,10 @@ using sofa::defaulttype::Quat;
 //#include <SerialComunication/SerialDriver.h>
 #include "SerialDriver.h"
 /// #include <SofaBaseMechanics/MechanicalObject.h>
+
+#include "TetrahedralCorotationalFEMForceFieldCNVSS.h"
+using namespace sofa::component::forcefield;
+
 
 using std::string;
 
@@ -94,8 +98,12 @@ class ZMQClientComponent : public sofa::core::behavior::BaseController
       */
     //typedef sofa::component::controller::SerialDriver g;
     typedef SerialDriver SerialDriverType;
+    typedef TetrahedralCorotationalFEMForceFieldCNVSS<Vec3dTypes> Tetrahedral;
+
     // typedef sofa::component::controller::SerialDriver d;
     std::vector<SerialDriverType *> objectsSerialDriver;
+    std::vector<Tetrahedral *> objectsTetrahedral;
+
 
   private:
     struct timeval t_before, t_after;

@@ -214,6 +214,16 @@ void ZMQClientComponent::init()
 
     //rootContext->getTreeObjects<SerialDriverType>(&objectsSerialDriver);
 
+    if(objectsSerialDriver.size() == 0) {
+        std::cout << "Oe" << " \n\n"
+                << endl;
+
+        getContext()->get<Tetrahedral>(&objectsTetrahedral, core::objectmodel::BaseContext::SearchRoot);
+        std::cout << " El tamaño de mi vector Tetrahedral:" << objectsTetrahedral.size() << " \n\n"
+               << endl;
+
+    }
+
     std::cout << "Hola este es el tamaño de mi vector Serial Driver:" << objectsSerialDriver.size() << " \n\n"
               << endl;
     std::cout << "Este es el elemento 0 de mi vector Serial Driver: " << objectsSerialDriver[0]->name.getValue() << " \n\n"
