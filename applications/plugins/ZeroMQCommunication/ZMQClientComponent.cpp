@@ -51,13 +51,13 @@ void ZMQClientComponent::setupConnection()
     /**publisherEndpoint is the endpoint through the clients will be connect to
      * Network Manager and will receive data driven by SOFA events
      */
-    const string publisherEndpoint = "tcp://ec2-34-239-214-140.compute-1.amazonaws.com:5557";
+    const string publisherEndpoint = "tcp://localhost:5557";
 
-    /**pushEndpoint is the enpoint through clients send SOFA data events to
+    /**pushEndpoint is the endpoint through clients send SOFA data events to
      * Network Manager and this in turn redirects them to all connected clients
      * via publisherEndpoint socket
     */
-    const string pushEndpoint = "tcp://ec2-34-239-214-140.compute-1.amazonaws.com:5558";
+    const string pushEndpoint = "tcp://localhost:5558";
 
     /**
      * Connecting to publisherEndpoint and pushEndpoint
@@ -203,7 +203,11 @@ void ZMQClientComponent::attachingDataToSend(attachingData b)
 
 void ZMQClientComponent::init()
 {
-    //fun();
+    std::cout << "ZeroMQCommunication::init()" << std::endl;
+    ZMQClientComponent z;
+
+    // Connecting to Nerwork Manager
+    z.setupConnection();
 
     /* We get the rootContext */
     sofa::simulation::Node::SPtr rootContext = static_cast<simulation::Node *>(this->getContext()->getRootContext());
@@ -232,11 +236,7 @@ void ZMQClientComponent::init()
               << endl;
     //SerialDriver* s = new SerialDriver();
 
-    std::cout << "ZeroMQCommunication::init()" << std::endl;
-    ZMQClientComponent z;
-
-    // Connecting to Nerwork Manager
-    z.setupConnection();
+   
 
 
     // float a = s->askDevice();
@@ -273,9 +273,14 @@ void ZMQClientComponent::draw(const core::visual::VisualParams *vparam)
 {
     // ZMQClientComponent z;
     // hapkitDataSend();
-    objectsSerialDriver[0]->setPositionInstrument(receiveData());
-    //float a = s->askDevice();
-    //float a = s->getTraslValue();
+    
+    if(objectsSerialDriver.size() > 0){
+        objectsSerialDriver[0]->setPositionInstrument(receiveData());
+    }else{
+    if(objectsTetrahedral.size() > 0)
+        receiveData();
+    }
+    
 
     /*
     float a = objectsSerialDriver[0]->getPositionInstrument();
