@@ -93,6 +93,8 @@ class ZMQClientComponent : public sofa::core::behavior::BaseController
      * to reference it on ZMQClientComponent.cpp to save inside the SerilDriver objects
       */
     //typedef sofa::component::controller::SerialDriver g;
+
+    // Se crea un alias de tipo clase SerialDriver
     typedef SerialDriver SerialDriverType;
     // typedef sofa::component::controller::SerialDriver d;
     std::vector<SerialDriverType *> objectsSerialDriver;
